@@ -11,6 +11,12 @@ Once setup, this extension will highlight all of the deprecated patterns you hav
 1. Setup a [Bastila](https://bastila.app/) account
 2. Create some standards you would like to enforce
 3. Generate a BASTILA_KEY to authenticate this tool
+4. Add your BASTILA_KEY to your VSC settings.json
+```
+"settings": {
+  "bastila.BASTILA_KEY": "Your key"
+}
+```
 
 ## Known Issues
 
