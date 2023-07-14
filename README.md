@@ -1,71 +1,25 @@
-# bastila-highlight README
+# bastila-highlight
 
-This is the README for your extension "bastila-highlight". After writing up a brief description, we recommend including the following sections.
+[Bastila](https://bastila.app/) is a tool for removing deprecated code. You define deprecated patterns using regex in the app and then prevent additional usages of those deprecated patterns from being used. The tool can also be used to track the removal of these patterns as well.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Once setup, this extension will highlight all of the deprecated patterns you have defined in the Bastila app. The extension starts once VSC has finished launching.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+1. Setup a [Bastila](https://bastila.app/) account
+2. Create some standards you would like to enforce
+3. Generate a BASTILA_KEY to authenticate this tool
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+* You can only have one BASTILA_KEY set which means you can only highlight one repository worth of issues.
 
 ## Release Notes
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### 0.4.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial pre-release.

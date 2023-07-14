@@ -3,46 +3,61 @@
 import * as vscode from 'vscode';
 import fetch from 'isomorphic-fetch';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  let decorationType: vscode.TextEditorDecorationType;
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "bastila-highlight" is now active!');
+  // Function to handle the highlighting logic
+  async function highlightPatterns(editor: vscode.TextEditor | undefined) {
+    if (editor) {
+      const document = editor.document;
+      const text = document.getText();
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('bastila-highlight.highlightBastila', async () => {
-		const editor = vscode.window.activeTextEditor;
-		if (editor) {
-				const document = editor.document;
-				const text = document.getText();
-				
-				const patterns = await fetchPatterns()
+      const patterns = await fetchPatterns()
 
-				const decorationType = vscode.window.createTextEditorDecorationType({
-						backgroundColor: 'rgba(255, 0, 0, 0.3)'
-				});
+      if (decorationType) {
+        decorationType.dispose();
+      }
 
-				const ranges: vscode.Range[] = []
+      decorationType = vscode.window.createTextEditorDecorationType({
+        backgroundColor: 'rgba(255, 59, 0, 0.4)'
+      });
 
-				for (let pattern of patterns) {
-					let regex = new RegExp(pattern['snippet'], "g");
-					let match;
-					while (match = regex.exec(text)) {
-							let startPos = document.positionAt(match.index);
-							let endPos = document.positionAt(match.index + match[0].length);
-							ranges.push(new vscode.Range(startPos, endPos));
-					}
-				}
-				
-				editor.setDecorations(decorationType, ranges);
-		}
-	});
+      const ranges: vscode.DecorationOptions[] = []
 
-	context.subscriptions.push(disposable);
+      for (let pattern of patterns) {
+        let regex = new RegExp(pattern['snippet'], "g");
+        let match;
+        while (match = regex.exec(text)) {
+          let startPos = document.positionAt(match.index);
+          let endPos = document.positionAt(match.index + match[0].length);
+          let range = new vscode.Range(startPos, endPos);
+
+          ranges.push({
+            range: range,
+            hoverMessage: 'This is a deprecated pattern defined in Bastila. ' + pattern['fix_recommendation']
+          });
+        }
+      }
+
+      editor.setDecorations(decorationType, ranges);
+    }
+  }
+
+  // Call the function on extension activation
+  highlightPatterns(vscode.window.activeTextEditor);
+
+  // Listen for when a text document is opened or changed, or when the active text editor is changed
+  vscode.workspace.onDidOpenTextDocument((document) => {
+    highlightPatterns(vscode.window.activeTextEditor);
+  });
+
+  vscode.workspace.onDidChangeTextDocument((event) => {
+    highlightPatterns(vscode.window.activeTextEditor);
+  });
+
+  vscode.window.onDidChangeActiveTextEditor((editor) => {
+    highlightPatterns(editor);
+  });
 }
 
 async function fetchPatterns(): Promise<any[]> {
@@ -56,7 +71,7 @@ async function fetchPatterns(): Promise<any[]> {
 					method: 'GET',
 					headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Api-Key 1KPTAMUj.xHeq2Y1fLSvH7UosH2H8XYtr2pQVDTGr`
+							'Authorization': `Api-Key ${apiKey}`
 					}
 			});
 

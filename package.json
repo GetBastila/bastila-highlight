@@ -2,23 +2,21 @@
   "name": "bastila-highlight",
   "displayName": "bastila-highlight",
   "description": "Highlight predefined deprecated patterns",
-  "version": "0.0.1",
+  "publisher": "bastila",
+  "version": "0.4.0",
   "engines": {
     "vscode": "^1.80.0"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/GetBastila/bastila-highlight"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": ["onStartupFinished"],
   "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "bastila-highlight.highlightBastila",
-        "title": "Bastila Highlight"
-      }
-    ]
-  },
+  "contributes": {},
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
