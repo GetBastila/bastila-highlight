@@ -12,6 +12,14 @@ export function activate(context: vscode.ExtensionContext) {
       const document = editor.document;
       const text = document.getText();
 
+      let config = vscode.workspace.getConfiguration('bastila');
+      let bastilaKey = config.get('BASTILA_KEY');
+    
+      if (!bastilaKey) {
+          vscode.window.showErrorMessage('Please set the BASTILA_KEY before using this extension.')
+          return
+      }
+
       const patterns = await fetchPatterns()
 
       if (decorationType) {
@@ -63,15 +71,15 @@ export function activate(context: vscode.ExtensionContext) {
 async function fetchPatterns(): Promise<any[]> {
 	const endpoint = `https://bastila.dev/api/check/standard-changes/`;
 
-	const config = vscode.workspace.getConfiguration('bastila');
-	const apiKey = config.get<string>('BASTILA_KEY');
+  let config = vscode.workspace.getConfiguration('bastila');
+  let bastilaKey = config.get('BASTILA_KEY');
 
 	try {
 			const response = await fetch(endpoint, {
 					method: 'GET',
 					headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Api-Key ${apiKey}`
+							'Authorization': `Api-Key ${bastilaKey}`
 					}
 			});
 

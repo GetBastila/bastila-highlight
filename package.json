@@ -4,7 +4,7 @@
   "description": "Highlight predefined deprecated patterns",
   "publisher": "bastila",
   "icon": "icon.png",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -17,7 +17,18 @@
   ],
   "activationEvents": ["onStartupFinished"],
   "main": "./out/extension.js",
-  "contributes": {},
+  "contributes": {
+    "configuration": {
+      "title": "Bastila Highlight",
+      "properties": {
+          "bastila.BASTILA_KEY": {
+              "type": "string",
+              "default": "",
+              "description": "The secret key used to authenticate the extension"
+          }
+      }
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
